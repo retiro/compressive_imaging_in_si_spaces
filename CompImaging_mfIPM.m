@@ -44,7 +44,8 @@ wav_bior = 'bior2.2'; % wavelet function, I.J - I should be p_in+1
                       % I = 3, J = 1, 3, 5, 7, 9
 
 % Load test image
-imageFolderName = '.\standard_test_images\';
+% imageFolderName = '.\standard_test_images\';
+imageFolderName = ['.', filesep, 'standard_test_images', filesep];
 imName = 'cameraman.tif';
 % imName = 'lena_gray_512.tif';
 % imName = 'peppers_gray.tif';
@@ -207,7 +208,7 @@ opts.verbose   = 1; % 0 for no printing info, 1 for basic printing info
 % ***************************************************************************************
 
 % Set LASSO regularization parameter
-lambdaFolderName = ['.\results_lambda_', measMtxType, '_tol-8-2\'];
+lambdaFolderName = ['.', filesep, 'results_lambda_', measMtxType, '_tol-8-2', filesep];
 imName_core = split(imName, '.');
 lambdaFileName = sprintf('%s_%s_sLev%d_N%d_upSamp%d.mat', char(imName_core(1)), wav_bior, scaleLevels, N, upSamp);
 try
