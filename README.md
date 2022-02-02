@@ -11,6 +11,7 @@ This is the official implementation of the paper "Single-Pixel Compressive Imagi
 Intro + an image with the comparison of the conventional and our B-spline method
 
 ## 2. Setup
+### mfIPM solver
 This software package uses an external package of the Matrix-free IPM (mfIPM) solver for the compressive sensing minimization problem. The solver's source code and additional scripts can be found [here](https://www.maths.ed.ac.uk/ERGO/mfipmcs/). For convenience, we provide the solver's source code in the _mfIPM_ subdirectory.
 
 To setup the mfIPM solver, start MATLAB and set the working directory to the main directory of the mfIPM package (...\compressive_imaging_in_si_spaces\mfIPM\mfipmCode). At the MATLAB prompt, run
@@ -19,12 +20,18 @@ To setup the mfIPM solver, start MATLAB and set the working directory to the mai
 ```
 This script adds the appropriate directories in the MATLAB path. The script will try to permanently add these directories to your path (in pathdefs.m), but may fail if that file is read-only. In that case, please copy and paste to your startup.m file the 'addpath' commands printed to the screen. If that does not help, please read the README.txt file provided in the _mfipmCode_ subdirectory.
 
-To test if the installation and setup for the mfIPM have been completed successfully, please run in the MATLAB prompt:
+To test if the setup for the mfIPM has been completed successfully, please run in the MATLAB prompt:
 ```
 >> mfipm_demo
 ```
+### Fast WHT
+If the mfIPM solver has been successfully installed, please set the working directory to the main directory of the software package (...\compressive_imaging_in_si_spaces). To use a fast realization of the Walsh-Hadamard transform, build a single C program fastWht.c into a MEX file by running
+```
+>> mex fastWht.c
+```
 
 ## 3. Quick Start
+
 
 ## 4. License
 ```
