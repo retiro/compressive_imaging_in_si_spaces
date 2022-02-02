@@ -53,9 +53,14 @@ In the _results_lambda_wht_tol-8-2_ subdirectory, there are reconstruction resul
 
 The results and λ values are stored in matrices in structures. Matrices are of 4 x 10 dimensions, where the rows correspond to the orders of the B-spline subspace of the underlying signal model, and columns to the measurement ratios which are in the paper set from 0.05 to 0.5. An example of the reconstruction results in the term of the PSNR for the _cameraman_ image and the _bior2.2_ wavelet sparsity basis:
 
+| p \ m<sub>r<sub> | 0.05 | 0.10 | 0.15 | 0.20 | 0.25 | 0.30 | 0.35 | 0.40 | 0.45 | 0.50 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **0** | `22.47` | `24.99` | `27.34` | `28.76` | `30.35` | `31.50` | `32.95` | `34.15` | `35.27` | `35.88` |
+| **1** | `24.04` | `27.94` | `30.25` |	`32.29` | `33.82` |	`35.13` | `36.26` |	`37.72` | `38.55` |	`39.31` |
+| **2** | `24.97` |	`28.94` | `31.71` | `33.74` | `35.65` |	`37.17` | `38.61` |	`39.76` | `41.20` |	`41.73` |
+| **3** | `25.49` |	`30.46` | `33.99` |	`36.79` | `39.22` |	`40.64` | `42.90` |	`44.16` | `45.21` |	`46.37` |
 
-
-## 4. License
+## 5. License
 ```
 Compressive Imaging in Shift-Invariant Spaces
 Copyright (C) 2022,  Tin Vlasic and Damir Sersic
@@ -74,7 +79,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 ```
 
-## 5. Citation
+## 6. Citation
 If you find our work useful in your research, please cite:
 ```
 @inproceedings{vlasic2021cisispaces,
@@ -88,5 +93,5 @@ If you find our work useful in your research, please cite:
 }
 ```
 
-## 6. Contact
+## 7. Contact
 If you have any questions, please feel free to email the authors.
