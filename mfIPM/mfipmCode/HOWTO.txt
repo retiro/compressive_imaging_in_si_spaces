@@ -1,0 +1,182 @@
+1) HOW TO USE file for the Matrix-free IPM solver
+=================================================
+
+  The Matrix-free IPM solver for one dimensional Compressed Sensing
+  problems proposed in [1].
+
+    [1] Kimon Fountoulakis, Jacek Gondzio and Pavel Zhlobich 
+        "Matrix-Free Interior Point Method for CS problems", 
+        ERGO Technical Report, 2012.
+
+  The Matrix-free IPM solves the l1-regularised program:
+
+    min tau*||x||_1 + 0.5*||Ax - b||^2,
+
+  using an infeasible primal-dual interior point algorithm, for details
+  please see at [1].
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+2) USAGE
+========
+
+The standard call of the Matrix-free IPM is:
+
+  [x out] = mfipm(n, A, b, tau, opts) 
+
+The first four arguments (n, A, b and tau) are required. 
+
+  n:   Number of columns of the constraint matrix A.
+  A:   The constraint matrix, usually defined as A=\Phi * \Psi,
+       where \Phi is a sensing matrix and \Psi a sparsity matrix.
+  b:   The vector of measurements (or the right hand side of the constraints Ax=b).
+  tau: The regularisation parameter.
+
+The opts argument is a structure and it is optional. Here is a short 
+explanation of the available options for opts:
+
+  opts.tol:        Optimality tolerance of the Matrix-free IPM.
+                   Default value: 1.0e-8.
+  opts.maxiters:   Maximum iterations of the Matrix-free IPM.
+                   Default value: 100.
+  opts.tolpcg:     Optimality tolerance for the PCG method.
+                   Default value: 1.0e-4.
+  opts.mxiterpcg:  Maximum iterations of the PCG method.
+                   Default value: 200.
+  opts.maxstepsz:  Maximum stepsize for primal and dual directions.
+                   Default value 0.999.
+  opts.cnt1:       Centering parameter when predictor directions are 
+                   performed. Set to 0 for pure predictor directions.
+                   Default value 0.1.
+  opts.cnt2:       Centering parameter when predictor directions are 
+                   performed and one of the primal and dual stepsizes of 
+                   the previous iteration were less than opts.ap for last
+                   iteration. 
+                   Set to 0 for pure predictor directions.
+                   Default value 0.5.
+  opts.cnt3:       Centering parameter when corrector directions are 
+                   performed. Set to 1 for perfect centering to the
+                   central path.
+                   Default value 0.8.
+  opts.ap:         If primal or dual stepsize <= ap then use cnt2 as as
+                   centering parameter, otherwise use cnt1.
+                   Default value 0.5.
+  opts.ac:         If primal or dual stepsize after calculating the
+                   predictor direction are <= ac then perform a corrector
+                   update.
+                   Default value 0.1.
+  opts.linsol:     0 to use the Conjugate Gradients method as a linear 
+                   system solver, 1 to use a direct solver.
+                   Default value: 0.
+  opts.verbose:    0 for no printing info, 1 for basic printing info
+                   and 2 for detailed printing info.
+                   Default value: 1.
+
+The list with the output parameters follows.
+
+  x:               The reconstructed sparse representation.
+  out.totcputime:  Total CPU time required by the Matrix-free IPM.
+  out.iters:       Number of Matrix-free IPM iterations.
+  out.cpusteps:    CPU time used for the calculation of the stepsizes.
+  out.totpcgiters: Total number of PCG iterations.
+  out.nMat:        Number of matrix-vector products.
+  out.predictors:  Number of predictor directions.
+  out.correctors:  Number of corrector directions.
+  out.linsystems:  Total number of linear systems solved. It is equal
+                   to out.predictors + out.correctors.
+  out.status:      1 if the problem was solved successfully, 0 if 
+                   maximum number of iterations reached.
+  out.message:     Termination status of the Matrix-free IPM
+                   solver. One of the following two messages is returned:
+                   i)  'Converged'
+                   ii) 'Maximum iterations reached'
+
+  ***************************************************************************************
+  If the measurements are noiseless please use opts.tol >= 1.e-6. In case that the 
+  measurements are contaminated with noise then please use opts.tol >= 1.0e-4. Regarding 
+  the accuracy of the PCG method opts.tolpcg=1.0e-1 to 1.0e-4 should be enough.
+  ***************************************************************************************
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+3) NOTE
+=======
+
+    If A is an operator, then it should be passed to the Matrix-free IPM 
+    as an A_operator (MATLAB struct). To use A_operator variables please
+    add to your MATLAB (if it is not already added) the subdirectory:
+    
+      "main mfipm directory"/operators
+ 
+    Example: To create an A_operator object, two functions or function 
+    handles for computing A*x and A'*x, respectively, must be given. 
+    Suppose they are AA and AT,
+          AA: a function handle such that AA(x) = A*x,
+          AT: a function handle such that AT(x) = A'*x.
+    Then A can be created as an A_operator by
+          A = A_operator(@(x) AA(x), @(x) AT(x));
+
+    An example for A being an implicit matrix that performs a discrete 
+    cosine transform (DCT) and returns the subset of the DCT result 
+    corresponding to omega is provided below
+
+     function y=pdct(x,picks); y=dct(x); y=y(picks); end
+     function y=pidct(x,n,picks); y=zeros(n,1); y(picks)=x; y=idct(y); end
+     A = A_operator(@(x) pdct(xno,omega), @(x) pidct(x,n,omega)); 
+
+    **This example has been copied from the FPC_AS.m in the 
+      FPC_AS_v1.21 software package.
+      url: http://www.caam.rice.edu/~optimization/L1/FPC_AS/ 
+
+The user should have a look at the "mfipm_demo.m". In this file two 
+simple cases of how to use the matrix-free ipm are demonstrated.
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+4) EXAMPLE
+==========
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Simple Example: Implicit matrix A.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Number of measurements.
+m = 2^10;
+
+% Size of columns of the constraint matrix A.
+n = 2^12;
+
+% Number of nonzeros in the sparsest representation.
+k = 51;
+
+% Create a Gaussian sensing matrix. Here we assume that the sparsity 
+% matrix is the identity.
+A = randn(m,n);
+
+% Create artificially an exact sparse representation.
+p     = randperm(n);
+x_opt = zeros(n,1); 
+
+x_opt(p(1:k)) = 2*randn(k,1);
+
+% Calculate the measurements.
+b = A*x_opt;
+
+% Set the regularization parameter.
+tau = 1.0e-2;
+
+% Options.
+opts.tol = 1.0e-10;
+opts.maxiters = 100;
+opts.tolpcg = 1.0e-2;
+opts.mxiterpcg = 200;
+opts.verbose = 1;
+
+% Call the Matrix-free IPM solver.
+[x out] = mfipm(n, A, b, tau, opts);
+
+
+Enjoy!
+Kimon, Jacek and Pavel
+07 April 2013
