@@ -25,13 +25,13 @@ To test if the setup for the mfIPM has been completed successfully, please run i
 >> mfipm_demo
 ```
 ### Fast WHT
-If the mfIPM solver has been successfully installed, please set the working directory to the main directory of the software package (...\compressive_imaging_in_si_spaces). To use a fast realization of the Walsh-Hadamard transform (WHT), build a C program fastWht.c into a MEX file by running
+If the mfIPM solver has been successfully installed, please set the working directory to the main directory of the software package (...\compressive_imaging_in_si_spaces). To use a fast realization of the Walsh-Hadamard transform (WHT), build a C program fastWht.c into a MEX file by running in the MATLAB prompt
 ```
 >> mex fastWht.c
 ```
-If you have problems building the fastWht.c program, please refer to the MathWorks [documentation](https://ch.mathworks.com/help/matlab/ref/mex.html) on buliding a MEX function.
+If there are problems with building the fastWht.c program, please refer to the MathWorks [documentation](https://ch.mathworks.com/help/matlab/ref/mex.html) on buliding a MEX function.
 
-You can test the fast WHT with a simple example code:
+The fast WHT can be tested with a simple example code:
 ```
 x = rand(1, 16);
 y = fastWht(x);
@@ -41,12 +41,20 @@ xHat = fastWht(y); % the transform should reproduce x
 ### MATLAB toolboxes
 The software package uses MATLAB signal processing and wavelet toolboxes. Instructions on installing a MATLAB toolbox can be found [here](https://www.mathworks.com/products/matlab/add-on-explorer.html).
 
-## 3. Quick Start
+We are set!
 
+## 3. Quick Start
+Set the working directory to the main directory of the software package (...\compressive_imaging_in_si_spaces). By running in the MATLAB prompt
+```
+>> CompImaging_mfIPM
+```
+the software should print information on the default settings and parameters, and the mfIPM solver will start minimazing the loss function. Once the optimization problem is solved, the software should output some solver details and two images, the left one corresponds to the _cameraman_ ground truth and the second one to the reconstructed image from 25% of the measurements. Finally, the software outputs reconstruction results in terms of the PSNR and SSIM. The results should correspond to the results published in Figure 8d of the manuscript.
+
+To try other settings, input images, wavelet spasity bases, measurement patterns and underlying signal models, open the CompImaging_mfIPM.m script and change parameters in the _Definition and initialization of variables_ section.
 
 ## 4. Add-Ons
 ### Standard test images
-The standard test images of 512 x 512 size that were used in the numerical experiments can be found in the _standard_test_images_ subdirectory.
+Standard test images of 512 x 512 size that were used in the numerical experiments can be found in the _standard_test_images_ subdirectory.
 
 ### Reconstruction results and the λ parameter
 In the _results_lambda_wht_tol-8-2_ subdirectory, there are reconstruction results in .mat files that correspond to various sparsity inducing biorthogonal wavelets. The reconstruction results are given in the terms of the PSNR and SSIM. These results correspond to the results for the _bior2.2_ and _bior4.4_ wavelets given by the bar charts in Figures 4, 5, 6 and 7 of the paper. Additionally, the provided .mat files store optimal values of the regularization parameter λ, which were determined experimentally for every setting such that they lead to the best reconstruction results in terms of the PSNR.
