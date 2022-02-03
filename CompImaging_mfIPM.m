@@ -44,7 +44,6 @@ wav_bior = 'bior2.2'; % wavelet function, I.J - I should be p_in+1
                       % I = 3, J = 1, 3, 5, 7, 9
 
 % Load test image
-% imageFolderName = '.\standard_test_images\';
 imageFolderName = ['.', filesep, 'standard_test_images', filesep];
 imName = 'cameraman.tif';
 % imName = 'lena_gray_512.tif';
