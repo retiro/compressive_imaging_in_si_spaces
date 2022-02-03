@@ -15,7 +15,8 @@ clc
 rng('default')
 
 %% Definition and initialization of variables
-p_in = 3; % B-spline degree of the input signal
+p_in = 3; % degree of the B-spline subspace of the signal model
+          % use p_in = 0 for conventional pixel-to-pixel basis CI
 N = 512; % number of B0-spline sampling functions in acquisition process 
          % in 1D (exponent with base 2)
 
@@ -53,7 +54,7 @@ imName = 'cameraman.tif';
 % imName = 'boat.tif';
 
 % Fix the seed
-n_rng = 2; % in paper we use 2
+n_rng = 2; % in the paper we use 2
 rng(n_rng)
                       
 %% global variables (do not edit)
@@ -240,13 +241,14 @@ yIm = blockproc(d_rec, [size(d_rec,1), 1], @(x) bSplineIndirectTransform(x.data,
 Im_rec = blockproc(yIm', [size(d_rec,2), 1], @(x) bSplineIndirectTransform(x.data, p_in, upSamp));
 Im_rec = abs(Im_rec');
 
+% reconstruction results
 Im_psnr = psnr(Im_rec, Im);
 Im_ssim = ssim(Im_rec, Im);
 fprintf('\n  PSNR  |  SSIM\n');
 fprintf('----------------\n');
 fprintf('%2.4f | %1.4f\n', Im_psnr, Im_ssim);
 
-% plot reconstruction
+% plot the reconstruction
 subplot(1,2,2);
 imagesc(Im_rec); colormap(gray);
 title(['rec. basis: B', num2str(p_in), '-spline, upsamp. factor: ', num2str(upSamp),', psnr: ', num2str(Im_psnr,4), 'dB, ssim: ', num2str(Im_ssim,4)]);
