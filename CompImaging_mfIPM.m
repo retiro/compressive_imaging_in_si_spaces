@@ -157,7 +157,6 @@ end
 
 %% solve l1-minimization problem
 % min tau*||x||_1 + 0.5*||Ax - y||^2,
-fprintf('\nSolver details\n');
 
 if strcmp(sparsityDomain, 'wavelets')
     % generate bookkeeping matrix S for wavelet decomposition and reconstruction
@@ -199,7 +198,7 @@ opts.tol       = 1.0e-8; % in the paper we use 1.0e-8
 opts.maxiters  = 100;
 opts.tolpcg    = 1.0e-2; % in the paper we use 1.0e-2
 opts.mxiterpcg = 200;
-opts.verbose   = 1; % 0 for no printing info, 1 for basic printing info
+opts.verbose   = 2; % 0 for no printing info, 1 for basic printing info
                     % and 2 for detailed printing info.
 % ***************************************************************************************
 % If the measurements are noiseless please use opts.tol >= 1.e-8. In case that the
@@ -220,8 +219,9 @@ catch
 end
 a = norm(A'*y, Inf);
 tau = lambda*a; % regularization parameter.
-fprintf('lambda = %e\n\n', lambda);
+fprintf('lambda = %e\n', lambda);
 
+fprintf('\nStarting solver\n');
 % Call the Matrix-free IPM solver.
 [x, out] = mfipm(x_len, A, y, tau, opts);
 
