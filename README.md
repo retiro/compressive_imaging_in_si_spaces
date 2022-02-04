@@ -50,14 +50,14 @@ Set the working directory to the main directory of the software package (...\com
 ```
 the software should print information on the default settings and parameters, and the mfIPM solver will start minimazing the loss function. Once the optimization problem is solved, the software should output some solver details and two images, the left one corresponds to the _cameraman_ ground truth and the second one to the reconstructed image from 25% of the measurements. Finally, the software outputs reconstruction results in terms of the PSNR and SSIM. The results should correspond to the results published in Figure 8d of the manuscript.
 
-To try other settings, input images, wavelet spasity bases, measurement patterns and underlying signal models, open the CompImaging_mfIPM.m script and change parameters in the _Definition and initialization of variables_ section.
+To try other parameters, input images, wavelet spasity bases, measurement patterns and underlying signal models, open the CompImaging_mfIPM.m script and change parameters in the _Definition and initialization of variables_ section.
 
 ## 4. Add-Ons
 ### Standard test images
-Standard test images of 512 x 512 size that were used in the numerical experiments can be found in the _standard_test_images_ subdirectory.
+Standard test images of 512 x 512 size that were used in the numerical experiments can be found in the [_standard_test_images_](./standard_test_images/) subdirectory.
 
 ### Reconstruction results and the λ parameter
-In the _results_lambda_wht_tol-8-2_ subdirectory, there are reconstruction results in .mat files that correspond to various sparsity inducing biorthogonal wavelets. The reconstruction results are given in the terms of the PSNR and SSIM. These results correspond to the results for the _bior2.2_ and _bior4.4_ wavelets given by the bar charts in Figures 4, 5, 6 and 7 of the paper. Additionally, the provided .mat files store optimal values of the regularization parameter λ, which were determined experimentally for every setting such that they lead to the best reconstruction results in terms of the PSNR.
+In the [_results_lambda_wht_tol-8-2_](./results_lambda_wht_tol-8-2/) subdirectory, there are reconstruction results in .mat files that correspond to various sparsity inducing biorthogonal wavelets. The reconstruction results are given in the terms of the PSNR and SSIM. These results correspond to the results for the _bior2.2_ and _bior4.4_ wavelets given by the bar charts in Figures 4, 5, 6 and 7 of the paper. Additionally, the provided .mat files store optimal values of the regularization parameter λ, which were determined experimentally for every setting such that they lead to the best reconstruction results in terms of the PSNR.
 
 The results and λ values are stored in matrices in structures. Matrices are of 4 x 10 dimensions, where the rows correspond to the orders of the B-spline subspace of the underlying signal model, and columns to the measurement ratios which are in the paper set from 0.05 to 0.5. An example of the reconstruction results in the term of the PSNR for the _cameraman_ image and the _bior2.2_ wavelet sparsity basis:
 
