@@ -8,7 +8,14 @@ Faculty of Electrical Engineering and Computing, University of Zagreb, Croatia
 This is the official implementation of the paper "Single-Pixel Compressive Imaging in Shift-Invariant Spaces via Exact Wavelet Frames."
 
 ## 1. Introduction
-Intro + an image with the comparison of the conventional and our B-spline method
+The paper proposes a continuous-domain approach to addressing the single-pixel compressive imaging problem. It uses the theory of generalized sampling in shift-invariant spaces to discretize the acquisition procedure of the single-pixel camera in an exact way. Such an approach allows us to model the observed two-dimensional signal in a more appropriate continuous-domain shift-invariant subspace than in the standard pixel-by-pixel subspace which we show that is too coarse an approximation. In the paper, we use B-spline basis functions to model the underlying continuous-domain signal of the image. To induce sparsity, which is necessary to achieve a faithful reconstruction in compressive imaging, we use biorthogonal spline wavelets that complement B-spline signal generators. Experimental results have shown that the proposed framework significantly overachieves the conventional approach in single-pixel compressive imaging.
+
+In the table below, we give a comparison between the conventional and our approach for reconstructions of the _cameraman_ image from 25% of compressive imaging measurements. The biorthogonal wavelets _bior2.2_ were used as a sparsity inducing domain.
+
+| Ground truth | Standard "pixel-by-pixel" function space | B<sub>3</sub>-spline function space |
+| :---: | :---: | :---: | 
+| <img src="./reconstructions/cameraman.png" width="300"> | <img src="./reconstructions/cameraman_B0_bior2.2_sLev3_N512_m0.25_upSamp1.png" width="300"> | <img src="./reconstructions/cameraman_B3_bior2.2_sLev3_N512_m0.25_upSamp1.png" width="300"> |
+| PSNR: ∞, SSIM: 1 | PSNR: 30.03 dB, SSIM: 0.7967 | PSNR: 38.17 dB, SSIM: 0.9452 | 
 
 ## 2. Setup
 ### mfIPM solver
@@ -61,7 +68,7 @@ In the [_results_lambda_wht_tol-8-2_](./results_lambda_wht_tol-8-2/) subdirector
 
 The results and λ values are stored in matrices in structures. Matrices are of 4 x 10 dimensions, where the rows correspond to the orders of the B-spline subspace of the underlying signal model, and columns to the measurement ratios which are in the paper set from 0.05 to 0.5. An example of the reconstruction results in the term of the PSNR for the _cameraman_ image and the _bior2.2_ wavelet sparsity basis:
 
-| p \ m<sub>r<sub> | 0.05 | 0.10 | 0.15 | 0.20 | 0.25 | 0.30 | 0.35 | 0.40 | 0.45 | 0.50 |
+| p \ m<sub>r</sub> | 0.05 | 0.10 | 0.15 | 0.20 | 0.25 | 0.30 | 0.35 | 0.40 | 0.45 | 0.50 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | **0** | `22.47` | `24.99` | `27.34` | `28.76` | `30.35` | `31.50` | `32.95` | `34.15` | `35.27` | `35.88` |
 | **1** | `24.04` | `27.94` | `30.25` |	`32.29` | `33.82` |	`35.13` | `36.26` |	`37.72` | `38.55` |	`39.31` |
