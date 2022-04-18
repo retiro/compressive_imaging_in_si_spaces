@@ -97,14 +97,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 ## 6. Citation
 If you find our work useful in your research, please cite:
 ```
-@inproceedings{vlasic2021cisispaces,
-    author = {Vlasic, Tin
-              and Sersic, Damir},
-    title = {Single-Pixel Compressive Imaging in
-             Shift-Invariant Spaces via Exact Wavelet Frames},
-    booktitle = {arXiv},
-    eprint = {2106.00404},
-    year = {2021}
+@article{vlasic2022,
+    title = {Single-pixel compressive imaging in shift-invariant spaces via exact wavelet frames},
+    journal = {Signal Processing: Image Communication},
+    volume = {105},
+    pages = {116702},
+    year = {2022},
+    doi = {https://doi.org/10.1016/j.image.2022.116702},
+    url = {https://www.sciencedirect.com/science/article/pii/S0923596522000443},
+    author = {Tin Vlašić and Damir Seršić}
 }
 ```
 
