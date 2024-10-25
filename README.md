@@ -2,7 +2,7 @@
 
 ### [Paper](https://arxiv.org/abs/2106.00404)
 
-[Tin Vlašić](https://www.fer.unizg.hr/en/tin.vlasic), [Damir Seršić](https://www.fer.unizg.hr/en/damir.sersic) <br>
+[Tin Vlašić](https://sites.google.com/view/tinvlasic), [Damir Seršić](https://www.fer.unizg.hr/en/damir.sersic) <br>
 Faculty of Electrical Engineering and Computing, University of Zagreb, Croatia
 
 This is the official implementation of the paper "Single-Pixel Compressive Imaging in Shift-Invariant Spaces via Exact Wavelet Frames."
